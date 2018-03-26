@@ -41,6 +41,7 @@ git clone https://github.com/apache/flink
 cd "${FLINK_DIR}"
 
 eval "${MVN_COMPILE}"
+EXIT_CODE=$?
 
 if [ $EXIT_CODE == 0 ]; then
 	printf "\n\n==============================================================================\n"
