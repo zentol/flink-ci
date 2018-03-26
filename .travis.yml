@@ -96,6 +96,11 @@ matrix:
         - PROFILE="-Dhadoop.version=2.4.1"
         - CACHE_NAME=JDK8_H241_M
       script: "./delegate.sh"
+    - jdk: "openjdk8"
+      env:
+        - PROFILE="-Dhadoop.version=2.8.3"
+      script: "./nightly.sh"
+
 
 git:
   depth: 100
