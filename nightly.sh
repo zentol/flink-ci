@@ -38,6 +38,8 @@ MVN_COMPILE="mvn ${MVN_COMPILE_OPTIONS} ${MVN_LOGGING_OPTIONS} ${PROFILE} clean 
 
 git clone https://github.com/apache/flink
 
+cp splits/* ${FLINK_DIR}/flink-end-to-end-tests
+
 cd "${FLINK_DIR}"
 
 eval "${MVN_COMPILE}"
@@ -48,7 +50,7 @@ if [ $EXIT_CODE == 0 ]; then
 	printf "Running end-to-end tests\n"
 	printf "==============================================================================\n"
 
-	FLINK_DIR=build-target flink-end-to-end-tests/run-nightly-tests.sh
+	FLINK_DIR=build-target flink-end-to-end-tests/${SCRIPT}
 
 	EXIT_CODE=$?
 else

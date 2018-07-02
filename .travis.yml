@@ -34,13 +34,20 @@ language: java
 # - define unique cache names in case the auto-generated ones are not unique
 #  (see https://docs.travis-ci.com/user/caching/#Caches-and-build-matrices)
 # - See https://issues.apache.org/jira/browse/FLINK-1072
+jdk: "openjdk8"
+script: "./nightly.sh"
+
 matrix:
   include:
-    - jdk: "openjdk8"
-      env:
-        - PROFILE="-Dhadoop.version=2.8.3"
-      script: "./nightly.sh"
-
+    - env:
+      - PROFILE="-Dhadoop.version=2.8.3"
+      - SCRIPT="split_misc.sh"
+    - env:
+      - PROFILE="-Dhadoop.version=2.8.3"
+      - SCRIPT="split_ha.sh"
+    - env:
+      - PROFILE="-Dhadoop.version=2.8.3"
+      - SCRIPT="split_sticky.sh"
 
 git:
   depth: 100
