@@ -36,7 +36,7 @@ MVN_LOGGING_OPTIONS="-Dlog.dir=${ARTIFACTS_DIR} -Dlog4j.configuration=file://$LO
 MVN_COMPILE_OPTIONS="-nsu -B -Dflink.forkCount=2 -Dflink.forkCountTestPackage=2 -DskipTests -Dfast"
 MVN_COMPILE="mvn ${MVN_COMPILE_OPTIONS} ${MVN_LOGGING_OPTIONS} ${PROFILE} clean install -pl flink-end-to-end-tests,flink-dist -am -amd"
 
-git clone https://github.com/apache/flink
+git clone --single-branch -b release-1.5 https://github.com/apache/flink
 
 cp splits/* ${FLINK_DIR}/flink-end-to-end-tests
 
