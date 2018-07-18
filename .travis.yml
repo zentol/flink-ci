@@ -48,6 +48,9 @@ matrix:
     - env:
       - PROFILE="-Dhadoop.version=2.8.3"
       - SCRIPT="split_sticky.sh"
+    - env:
+      - PROFILE="-Dhadoop.version=2.8.3"
+      - SCRIPT="split_checkpoints.sh"
 
 git:
   depth: 100
