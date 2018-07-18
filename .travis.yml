@@ -29,6 +29,12 @@ before_cache:
 
 install: true
 
+# more up-to-date Docker version
+addons:
+  apt:
+    packages:
+      - docker-ce
+
 language: java
 
 # - define unique cache names in case the auto-generated ones are not unique
@@ -76,8 +82,13 @@ env:
 before_script:
    - "gem install --no-document --version 0.8.9 faraday "
 
-# Install maven 3.2.5 since trusty uses 3.3.9 for which shading is broken
 before_install:
+   # more up-do-date docker-compose
+   - sudo rm /usr/local/bin/docker-compose
+   - curl -L https://github.com/docker/compose/releases/download/1.21.1/docker-compose-`uname -s`-`uname -m` > docker-compose
+   - chmod +x docker-compose
+   - sudo mv docker-compose /usr/local/bin
+   # Install maven 3.2.5 since trusty uses 3.3.9 for which shading is broken
    - "wget https://archive.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip"
    - "unzip -qq apache-maven-3.2.5-bin.zip"
    - "rm apache-maven-3.2.5-bin.zip"
