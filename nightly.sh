@@ -18,7 +18,7 @@
 ################################################################################
 
 HERE="`dirname \"$0\"`"				# relative
-HERE="`( cd \"${HERE}\" && pwd )`" 	# absolutized and normalized
+HERE="`( cd \"${HERE}\" && pwd -P)`" 	# absolutized and normalized
 if [ -z "${HERE}" ] ; then
 	# error; for some reason, the path is not accessible
 	# to the script (e.g. permissions re-evaled after suid)
