@@ -17,8 +17,30 @@
 # limitations under the License.
 ################################################################################
 
-git clone https://github.com/apache/flink
+REMOTE=${REMOTE:-apache}
+BRANCH=${BRANCH:-master}
+
+if [[ -z ${MVN_VERSION} ]]; then
+    echo "MVN_VERSION was not set."
+    exit 1
+fi
+
+wget https://archive.apache.org/dist/maven/maven-3/${MVN_VERSION}/binaries/apache-maven-${MVN_VERSION}-bin.zip
+unzip -qq apache-maven-${MVN_VERSION}-bin.zip
+rm apache-maven-${MVN_VERSION}-bin.zip
+export M2_HOME=$PWD/apache-maven-${MVN_VERSION}
+export PATH=$M2_HOME/bin:$PATH
+
+git clone --single-branch -b ${BRANCH} https://github.com/${REMOTE}/flink
 
 cd flink
 
-./tools/travis_mvn_watchdog.sh 300
+LOG4J_PROPERTIES=${FLINK_DIR}/tools/log4j-travis.properties
+
+MVN_LOGGING_OPTIONS="-Dlog4j.configuration=file://$LOG4J_PROPERTIES -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
+MVN_COMPILE_OPTIONS="-nsu -B -DskipTests -Dfast"
+
+MVN_COMPILE="mvn ${MVN_COMPILE_OPTIONS} ${MVN_LOGGING_OPTIONS} ${PROFILE} clean package"
+
+eval "${MVN_COMPILE}"
+exit $?
